@@ -1,0 +1,25 @@
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr repeat(5, 2fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  min-height: 500px;
+  background: white;
+  max-width: 840px;
+  margin: 20px auto;
+  border: 1px solid #6565656b;
+  box-shadow: 2px 2px 20px #52525230;
+}
+
+.day-current-month {
+  background:#fbfbfb;
+}
+
+.day {
+ background: #a4a4a4;
+}
+
+.calendar-grid > div {
+  padding: 1px 3px .5px;
+}
