@@ -9,11 +9,9 @@ export class CalendarContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      today: new Date(),
       displayMonth: {
         currentMonth: new Date(),
         firstDay: undefined,
-        lastDay: undefined,
       },
       totalBudget: 0,
     };
@@ -23,6 +21,10 @@ export class CalendarContainer extends React.Component {
     this.setFirstLastDay();
   }
 
+  /**
+    * Set the date of the first sunday of a 35 day calendar display
+    * This day can be the previous month
+  */
   setFirstLastDay() {
     this.setState((prevState) => ({
       ...prevState,
@@ -33,15 +35,14 @@ export class CalendarContainer extends React.Component {
           prevState.displayMonth.currentMonth.getMonth(),
           1,
         ),
-        lastDay: new Date(
-          prevState.displayMonth.currentMonth.getFullYear(),
-          prevState.displayMonth.currentMonth.getMonth() + 1,
-          0,
-        ),
       },
     }));
   }
 
+  /**
+    * Move the display month forward or backward
+    * @param {number} a one or negative one depending on nav direction
+  */
   navigateMonth(num) {
     this.setState((prevState) => ({
       ...prevState,
