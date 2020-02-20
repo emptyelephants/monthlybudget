@@ -14,21 +14,25 @@ export class CalendarContainer extends React.Component {
         firstDay: undefined,
       },
       totalBudget: 0,
+      budgetItems: [],
     };
   }
 
   componentDidMount() {
-    this.setFirstLastDay();
+    this.setFirstDay();
     fetch('/api/users')
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((error) => {
+        throw (error);
+      });
   }
 
   /**
     * Set the date of the first sunday of a 35 day calendar display
     * This day can be the previous month
   */
-  setFirstLastDay() {
+  setFirstDay() {
     this.setState((prevState) => ({
       ...prevState,
       displayMonth: {
@@ -57,7 +61,7 @@ export class CalendarContainer extends React.Component {
         ),
       },
     }));
-    this.setFirstLastDay();
+    this.setFirstDay();
   }
   /*
     Fetch and clean that data

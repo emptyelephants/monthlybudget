@@ -1,9 +1,12 @@
 import React from 'react';
 import { CalendarContainer } from './components/CalendarContainer';
 
+import { CalendarContainerHooks } from './components/CalendarContainerHooks';
+
 const App = () => (
   <div className="App">
-    <CalendarContainer />
+    {/* <CalendarContainer /> */}
+    <CalendarContainerHooks />
   </div>
 );
 

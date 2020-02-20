@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { makeServer } from './server';
 
+// intercept requests during DEV to use MirageJS
 if (process.env.NODE_ENV === 'development') {
   makeServer();
 }
