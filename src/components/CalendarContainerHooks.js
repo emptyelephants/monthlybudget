@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMonthHook } from './hooks/useMonthHook';
 import { CalendarDays } from './CalendarDays';
 import { MONTH_NAMES as monthNames } from '../Constants';
 
 import './CalendarContainer.css';
 
-
 export const CalendarContainerHooks = () => {
-  // const [totalBudget, setTotalBudget] = useState(0);
   const [displayMonth, setDisplayMonth] = useMonthHook(new Date());
 
-  // const [firstSunday, setFirstSunday] = useState();
+  useEffect(() => {
+    console.log('mount');
+    console.log(displayMonth.currentMonth);
+    console.log(displayMonth.firstSunday);
 
-  // setFirstSunday();
+  }, [displayMonth.currentMonth]);
+
   return (
-
     <>
       <h1>
-        { monthNames[displayMonth.getMonth()] }
+        { monthNames[displayMonth.currentMonth.getMonth()] }
       </h1>
       <div className="calendar-controller">
         <button
@@ -34,11 +35,10 @@ export const CalendarContainerHooks = () => {
         </button>
       </div>
       <div className="calendar-container">
-        {/* <CalendarDays
-          firstSunday={firstSunday}
-          currentMonth={displayMonth}
-          // budgetEntries={fakeBudgetCall}
-        /> */}
+        <CalendarDays
+          firstSunday={displayMonth.firstSunday}
+          currentMonth={displayMonth.currentMonth}
+        />
       </div>
     </>
   );

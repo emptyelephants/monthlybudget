@@ -4,23 +4,16 @@ import { DAY_NAMES as dayNames } from '../Constants';
 import './CalendarDays.css';
 
 export const CalendarDays = (props) => {
-  const { firstDay, currentMonth } = props;
+  const { firstSunday, currentMonth } = props;
   const allDays = [];
-  let firstSundayFirstWeek;
+  console.log(firstSunday);
+  console.log(currentMonth);
 
-  if (firstDay) {
-    firstSundayFirstWeek = new Date(
-      firstDay.getFullYear(),
-      firstDay.getMonth(),
-      firstDay.getDate() - firstDay.getDay(),
-    );
-    for (let i = 0; i < 35; i += 1) {
-      allDays.push({
-        calendarDay: new Date(firstSundayFirstWeek),
-        items: [],
-      });
-      firstSundayFirstWeek.setDate(firstSundayFirstWeek.getDate() + 1);
-    }
+  for (let i = 0; i < 35; i += 1) {
+    allDays.push({
+      calendarDay: new Date(firstSunday),
+    });
+    firstSunday.setDate(firstSunday.getDate() + 1);
   }
 
   return (
