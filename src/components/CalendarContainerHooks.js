@@ -3,6 +3,7 @@ import { useMonthHook } from './hooks/useMonthHook';
 import { CalendarDays } from './CalendarDays';
 
 import { MONTH_NAMES as monthNames } from '../Constants';
+import { DAY_NAMES as dayNames } from '../Constants';
 
 import './CalendarContainer.css';
 import './CalendarDays.css';
@@ -12,43 +13,52 @@ export const CalendarContainerHooks = () => {
   const [calendarDays, setCalendarDays] = React.useState([]);
 
   useEffect(() => {
+    fetch('/api/users')
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((error) => {
+        throw (error);
+      });
+  }, []);
+
+  useEffect(() => {
     const currentCalendar = [];
     const tempDay = new Date(displayMonth.firstSunday);
-    // const test = { test: 1 };
     for (let i = 0; i < 35; i += 1) {
       currentCalendar.push({
         calendarDay: new Date(tempDay),
         items: [],
       });
       tempDay.setDate(tempDay.getDate() + 1);
-      // console.log(test);
-
-
     }
-    console.log(currentCalendar);
     setCalendarDays(currentCalendar);
   }, [displayMonth]);
 
   return (
     <>
       <h1>
-        {/* { monthNames[displayMonth.currentMonth.getMonth()] } */}
+        { monthNames[displayMonth.currentMonth.getMonth()] }
       </h1>
       <div className="calendar-controller">
         <button
           type="button"
-          onClick={() => setDisplayMonth(-1)}
+          onClick={() => setTimeout(() => setDisplayMonth(-1), 100)}
         >
           {'<'}
         </button>
         <button
           type="button"
-          onClick={() => setDisplayMonth(1)}
+          onClick={() => setTimeout(() => setDisplayMonth(1), 100)}
         >
           {'>'}
         </button>
       </div>
-      <div className="calendar-container">
+      <div className="calendar-grid">
+        {dayNames.map((dayName) => (
+          <div key={dayName}>
+            {dayName}
+          </div>
+        ))}
         {calendarDays.length && calendarDays.map((day) => (
           <div
             className={
