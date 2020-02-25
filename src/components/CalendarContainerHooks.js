@@ -1,44 +1,69 @@
 import React, { useEffect } from 'react';
 import { useMonthHook } from './hooks/useMonthHook';
 import { CalendarDays } from './CalendarDays';
+
 import { MONTH_NAMES as monthNames } from '../Constants';
 
 import './CalendarContainer.css';
+import './CalendarDays.css';
 
 export const CalendarContainerHooks = () => {
   const [displayMonth, setDisplayMonth] = useMonthHook(new Date());
+  const [calendarDays, setCalendarDays] = React.useState([]);
 
   useEffect(() => {
-    console.log('mount');
-    console.log(displayMonth.currentMonth);
-    console.log(displayMonth.firstSunday);
+    const currentCalendar = [];
+    const tempDay = new Date(displayMonth.firstSunday);
+    // const test = { test: 1 };
+    for (let i = 0; i < 35; i += 1) {
+      currentCalendar.push({
+        calendarDay: new Date(tempDay),
+        items: [],
+      });
+      tempDay.setDate(tempDay.getDate() + 1);
+      // console.log(test);
 
-  }, [displayMonth.currentMonth]);
+
+    }
+    console.log(currentCalendar);
+    setCalendarDays(currentCalendar);
+  }, [displayMonth]);
 
   return (
     <>
       <h1>
-        { monthNames[displayMonth.currentMonth.getMonth()] }
+        {/* { monthNames[displayMonth.currentMonth.getMonth()] } */}
       </h1>
       <div className="calendar-controller">
         <button
           type="button"
           onClick={() => setDisplayMonth(-1)}
         >
-          Previous Month
+          {'<'}
         </button>
         <button
           type="button"
           onClick={() => setDisplayMonth(1)}
         >
-          Next Month
+          {'>'}
         </button>
       </div>
       <div className="calendar-container">
-        <CalendarDays
-          firstSunday={displayMonth.firstSunday}
-          currentMonth={displayMonth.currentMonth}
-        />
+        {calendarDays.length && calendarDays.map((day) => (
+          <div
+            className={
+              `day${
+                displayMonth.currentMonth.getMonth() === day.calendarDay.getMonth() ? '-current-month' : ''
+              }`
+            }
+            id={day.calendarDay.getTime()}
+            key={day.calendarDay.getTime()}
+          >
+            <p>
+              {day.calendarDay.getDate()}
+            </p>
+          </div>
+        ))}
       </div>
     </>
   );
