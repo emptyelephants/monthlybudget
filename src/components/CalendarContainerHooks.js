@@ -20,7 +20,7 @@ export const CalendarContainerHooks = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios('/api/users');
-      console.log(result.data.users[0]);
+
     };
     fetchData();
   }, []);
