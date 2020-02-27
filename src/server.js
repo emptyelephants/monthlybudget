@@ -11,7 +11,8 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     seeds(mock) {
       mock.create('user', {
-        name: 'Miguel',
+        userName: 'Miguel',
+        uID: 661537,
         budgetLog: [{
           entryTitle: 'Payroll',
           cost: 1000,

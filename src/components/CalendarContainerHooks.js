@@ -1,38 +1,42 @@
-import React, { useEffect } from 'react';
-import { useMonthHook } from './hooks/useMonthHook';
-import { CalendarDays } from './CalendarDays';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import { MONTH_NAMES as monthNames } from '../Constants';
-import { DAY_NAMES as dayNames } from '../Constants';
+import { useMonthHook } from './hooks/useMonthHook';
+import { CalendarDaysHooks } from './CalendarDaysHooks';
+
+import { MONTH_NAMES as monthNames, DAY_NAMES as dayNames } from '../Constants';
 
 import './CalendarContainer.css';
-import './CalendarDays.css';
 
 export const CalendarContainerHooks = () => {
   const [displayMonth, setDisplayMonth] = useMonthHook(new Date());
-  const [calendarDays, setCalendarDays] = React.useState([]);
+  const [currentCalendarBlocks, setCurrentCalndarBlocks] = useState([]);
+  const [userBudgetEntries, setUserBudgetEntries] = useState({
+    wasFetched: false,
+    budgetEntries: [],
+  });
 
+  // temporary, need to refactor the mirage backend to split up users and budget entries
   useEffect(() => {
-    fetch('/api/users')
-      .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((error) => {
-        throw (error);
-      });
+    const fetchData = async () => {
+      const result = await axios('/api/users');
+      console.log(result.data.users[0]);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
-    const currentCalendar = [];
+    const tempCalendarBlocks = [];
     const tempDay = new Date(displayMonth.firstSunday);
     for (let i = 0; i < 35; i += 1) {
-      currentCalendar.push({
+      tempCalendarBlocks.push({
         calendarDay: new Date(tempDay),
-        items: [],
+        // expenses: [userBudgetEntries.filter((entry) => entry.budgetDate === tempDay.getTime())],
       });
       tempDay.setDate(tempDay.getDate() + 1);
     }
-    setCalendarDays(currentCalendar);
-  }, [displayMonth]);
+    setCurrentCalndarBlocks(tempCalendarBlocks);
+  }, [displayMonth, userBudgetEntries]);
 
   return (
     <>
@@ -53,28 +57,11 @@ export const CalendarContainerHooks = () => {
           {'>'}
         </button>
       </div>
-      <div className="calendar-grid">
-        {dayNames.map((dayName) => (
-          <div key={dayName}>
-            {dayName}
-          </div>
-        ))}
-        {calendarDays.length && calendarDays.map((day) => (
-          <div
-            className={
-              `day${
-                displayMonth.currentMonth.getMonth() === day.calendarDay.getMonth() ? '-current-month' : ''
-              }`
-            }
-            id={day.calendarDay.getTime()}
-            key={day.calendarDay.getTime()}
-          >
-            <p>
-              {day.calendarDay.getDate()}
-            </p>
-          </div>
-        ))}
-      </div>
+      {/* <CalendarDaysHooks
+        dayNames={dayNames}
+        currentMonth={displayMonth.currentMonth}
+        calendarBlocks={currentCalendarBlocks}
+      /> */}
     </>
   );
 };

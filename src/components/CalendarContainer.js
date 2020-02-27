@@ -1,7 +1,6 @@
 import React from 'react';
 import { CalendarDays } from './CalendarDays';
 import { MONTH_NAMES as monthNames } from '../Constants';
-import { fakeBudgetCall } from '../FakeData';
 
 import './CalendarContainer.css';
 
@@ -92,7 +91,7 @@ export class CalendarContainer extends React.Component {
           <CalendarDays
             firstDay={displayMonth.firstDay}
             currentMonth={displayMonth.currentMonth}
-            budgetEntries={fakeBudgetCall}
+
           />
         </div>
       </>

@@ -4,9 +4,9 @@
   grid-template-rows: 1fr repeat(5, 2fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  min-height: 500px;
+  min-height: 520px;
   background: white;
-  max-width: 840px;
+  max-width: 890px;
   margin: 20px auto;
   border: 1px solid #6565656b;
   box-shadow: 2px 2px 20px #52525230;

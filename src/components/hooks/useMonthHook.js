@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-// TODO: add first day of month logic here, make it listen to display month change
 
+// this hook lets you change the current display month
+// and also sets the first sunday of the first week of the month,
+// note that the first sunday might be the previous month
 const getFirstDayOfMonth = (date) => new Date(
   date.getFullYear(),
   date.getMonth(),
